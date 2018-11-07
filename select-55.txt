@@ -1,0 +1,13 @@
+select distinct
+class
+,min(launched) as year
+from ships
+group by class
+
+union 
+
+select
+class
+,null
+from classes
+where class not in (select class from ships)

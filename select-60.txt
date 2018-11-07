@@ -1,0 +1,14 @@
+select A.point, 
+(case when sum_out is null then sum_in
+else sum_in - sum_out end) as Remain
+from (
+select inc.point, sum(inc.inc) as sum_in
+from income_o inc
+where inc.date < convert(datetime,'20010415')
+group by inc.point
+) A left join (
+select out.point, sum(out.out) as sum_out
+from outcome_o out
+where out.date < convert(datetime,'20010415')
+group by out.point
+) B on A.point = B.point

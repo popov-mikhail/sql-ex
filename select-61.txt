@@ -1,0 +1,5 @@
+select (
+case when (select sum(out.out) as o from outcome_o out) is null then (select sum(inc.inc) as i from income_o inc) else (
+select sum(inc.inc) as i from income_o inc) - 
+(
+select sum(out.out) as o from outcome_o out) end) as remain

@@ -1,0 +1,15 @@
+Select model, type
+from product 
+where model not like '%[^1-9]%'
+
+union all
+
+Select model, type
+from product 
+where model not like '%[^A-Z]%'
+
+union all
+
+Select model, type
+from product 
+where model not like '%[^a-z]%'

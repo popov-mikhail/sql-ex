@@ -1,0 +1,20 @@
+select
+c.class
+,(case when B.class is null then 0 else B.count1 end) as sunks 
+from classes c 
+left join (
+select
+A.class
+,count(A.ship) as count1
+from (
+select 
+o.ship
+,(case when s.class is null then c.class else s.class end) as class
+from outcomes o
+left join ships s on s.name = o.ship
+left join classes c on c.class = o.ship
+where o.result = 'sunk'
+and (s.class is not null or c.class is not null)
+) A
+group by A.class
+) B on B.class = c.class

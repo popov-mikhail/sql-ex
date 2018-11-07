@@ -1,0 +1,48 @@
+Select distinct classes.class
+from classes join ships on ships.class = classes.class
+
+union all
+
+select distinct outcomes.ship
+from classes join ships on ships.class = classes.class
+right join outcomes on outcomes.ship = classes.class
+
+
+
+
+
+
+
+
+/*
+union all
+
+select distinct outcomes.ship
+from outcomes left join classes on classes.class = outcomes.ship
+where classes.class is not null
+*/
+
+
+
+select distinct class
+from classes left join outcomes on ship = class
+
+union
+
+select distinct outcomes.ship
+from outcomes left join 
+(
+select distinct ships.name
+from ships left join classes on classes.class = ships.class
+) a on a.name = outcomes.ship
+where a.name is null
+
+
+select distinct class
+from classes left join outcomes on ship = class
+
+union
+
+select distinct outcomes.ship
+from outcomes left join classes on classes.class = outcomes.ship
+where classes.class is not null

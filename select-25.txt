@@ -1,0 +1,17 @@
+select distinct maker
+from product pr join pc on pc.model = pr.model
+where 
+pc.ram = (
+select min(ram)
+from pc
+)
+and pc.speed = (
+select max(speed)
+from pc
+where ram = (select min(ram) from pc)
+)
+and maker in (
+select distinct maker
+from product
+where type = 'Printer'
+)

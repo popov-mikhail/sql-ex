@@ -1,0 +1,18 @@
+select 
+A.point
+,A.date
+,i.inc
+,o.out
+from
+(select
+point
+,date
+from income_o i
+union
+select
+point
+,date
+from outcome_o o
+) A
+left join income_o i on i.point = A.point and i.date = A.date
+left join outcome_o o on o.point = A.point and o.date = A.date

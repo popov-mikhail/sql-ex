@@ -1,0 +1,24 @@
+select
+B.class
+from
+(
+select
+A.name
+,(case when c1.class is null then c2.class else c1.class end) as class
+from
+(
+select s.name, s.class
+from ships s
+
+union 
+
+select o.ship, 'NA'
+from outcomes o
+where o.ship not in (select name from ships)
+) A
+left join classes c1 on c1.class = A.class
+left join classes c2 on c2.class = A.name
+where c1.class is not null or c2.class is not null
+) B
+group by B.class
+having count(B.name) = 1

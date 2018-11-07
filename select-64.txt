@@ -1,0 +1,15 @@
+select B.point, B.date, B.op, sum(case when B.op = 'inc' then B.inc else B.out end) as money
+from (
+select A.*, o.point as point_out, o.out, i.point as point_inc, i.inc
+,case when i.point is not null then 'inc' else 'out' end as op
+from
+(select point, date from outcome
+
+union 
+
+select point, date from income) A
+left join outcome o on o.point = A.point and o.date = A.date
+left join income i on i.point = A.point and i.date = A.date
+where i.point is null or o.point is null
+) B
+group by B.point, B.date, B.op

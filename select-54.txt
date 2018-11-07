@@ -1,0 +1,18 @@
+select
+cast(avg(A.numguns * 1.0) as numeric (6,2)) as avg_numguns
+from
+(
+Select 
+c.numguns
+from ships s 
+join classes c on c.class = s.class
+where c.type = 'bb'
+
+union
+
+select 
+c.numguns
+from outcomes o
+join classes c on o.ship = c.class 
+where c.type = 'bb'
+) A

@@ -1,0 +1,9 @@
+select maker, avg(hd) as avg_hd
+from pc join product p on pc.model = p.model
+where maker in
+(
+select distinct maker
+from product
+where type = 'Printer'
+)
+group by maker

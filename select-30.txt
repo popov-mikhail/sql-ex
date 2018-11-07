@@ -1,0 +1,22 @@
+select A.point, A.date, C.out, B.inc
+from
+(select
+point
+,date
+from income i
+union
+select
+point
+,date
+from outcome o
+) A
+left join (
+select i.point, i.date, sum(i.inc) as inc
+from income i
+group by i.point, i.date
+) B on B.point = A.point and B.date = A.date
+left join (
+select o.point, o.date, sum(o.out) as out
+from outcome o 
+group by o.point, o.date
+) C on C.date = A.date and C.point = A.point
